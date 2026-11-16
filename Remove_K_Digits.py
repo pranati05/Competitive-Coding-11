@@ -5,30 +5,22 @@
 
 # Your code here along with comments explaining your approach
 # Using Stack. Iterate over the list and check if the stack is not empty and k > 0 and element in stack is greater than the current number
-# If it is greater then pop the element from the stack until k becomes 0 or it is the end of the string
+# If it is greater then pop the element from the stack until k becomes 0 or it is the end of the string or the top number is less than the current number
 # Append the elements to stack
-# If k > 0 then pop the elements from the stack
-# Join the stack and remove any 0's starting from the left and add it to res
-# If the stack is empty return '0' else res
+# If the k doesnt become 0 so we pop the elements from the stack until it becomes 0
+# Return join the stack and remove any 0's starting from the left using lstrip("0") or "0" if the stack is empty
 
 
 class Solution:
     def removeKdigits(self, num: str, k: int) -> str:
-        if not num:
-            return None
         stack = []
+        res = ""
         for i in range(len(num)):
             while stack and stack[-1] > num[i] and k > 0:
-                stack.pop()
                 k -= 1
+                stack.pop()
             stack.append(num[i])
-
-        while k:
+        while k > 0:
             stack.pop()
             k -= 1
-
-        res = ''.join(stack).lstrip('0')
-
-        if not res:
-            return '0'
-        return res
+        return ''.join(stack).lstrip("0") or "0"
